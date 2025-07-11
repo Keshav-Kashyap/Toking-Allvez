@@ -1,5 +1,5 @@
     import React, { useState, useRef, useEffect } from 'react';
-    import styles from "../styles/VideoComponent.module.css"
+    import styles from "../styles/videoComponent.module.css"
     import TextField from '@mui/material/TextField';
     import Button from '@mui/material/Button';
     import { io } from "socket.io-client";
