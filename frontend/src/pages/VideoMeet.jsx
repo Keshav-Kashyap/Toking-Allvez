@@ -1,20 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styles from "../styles/VideoComponent.module.css"
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { io } from "socket.io-client";
-import IconButton from '@mui/material/IconButton';
-import VideocamIcon from '@mui/icons-material/VideoCam';
-import VideocamOffIcon from '@mui/icons-material/VideoCamOff';
-import CallEndIcon from '@mui/icons-material/CallEnd';
-import MicIcon from '@mui/icons-material/Mic';
-import MicOffIcon from '@mui/icons-material/MicOff';
-import ScreenShareIcon from '@mui/icons-material/ScreenShare';
-import StopScreenShareIcon from '@mui/icons-material/StopScreenShare';
-import ChatIcon from '@mui/icons-material/Chat';
-import Badge from '@mui/material/Badge';
-import { useNavigate } from 'react-router-dom';
-import server from '../environment'
+    import React, { useState, useRef, useEffect } from 'react';
+    import styles from "../styles/VideoComponent.module.css"
+    import TextField from '@mui/material/TextField';
+    import Button from '@mui/material/Button';
+    import { io } from "socket.io-client";
+    import IconButton from '@mui/material/IconButton';
+import VideocamIcon from '@mui/icons-material/Videocam';       // ✅ correct
+import VideocamOffIcon from '@mui/icons-material/VideocamOff'; // ✅ correct
+
+    import CallEndIcon from '@mui/icons-material/CallEnd';
+    import MicIcon from '@mui/icons-material/Mic';
+    import MicOffIcon from '@mui/icons-material/MicOff';
+    import ScreenShareIcon from '@mui/icons-material/ScreenShare';
+    import StopScreenShareIcon from '@mui/icons-material/StopScreenShare';
+    import ChatIcon from '@mui/icons-material/Chat';
+    import Badge from '@mui/material/Badge';
+    import { useNavigate } from 'react-router-dom';
+    import server from '../environment'
 
 
 const server_url = server;
