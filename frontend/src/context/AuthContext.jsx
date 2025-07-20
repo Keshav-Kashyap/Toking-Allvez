@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       if (response.status === StatusCodes.OK) {
         localStorage.setItem("token", response.data.token);
         setUserData(response.data.user);
-        router('/');
+        router('/home');
         return response.data.message;
       }
     } catch (err) {

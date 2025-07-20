@@ -1,68 +1,485 @@
-.meetVideoContainer{
-    position:relative;
-    height: 100vh;
-    background-color: rgb(1,4,48);
+/* Lobby Styles */
+.lobbyContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  padding: 20px;
 }
 
-.meetUserVideo{
- 
-    position: absolute;
-    bottom: 10vh;
-    height: 25vh;
-    left: 0;
-    background-color: royalblue;
-    border-radius: 20px;
-}
-.buttonContainer {
-  position: absolute;
-  width: 100vw;
-  bottom: 0;
+.lobbyCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
   text-align: center;
 }
 
-
-
-
-.buttonContainer  svg{
-
-   font-size: 3rem;
+.lobbyCard h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
-.conferenceView{
-
-gap: 10px;
-display: flex;
-padding: 10px;
-
-}
-.conferenceView  video {
-
-
-width: 40vw;
-min-width: 20vw;
-border-radius: 10px;
-
+.previewContainer {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
 }
 
-.chatRoom{
-  position: absolute;
-  height: 90vh;
-  right: 0;
-  background: white;
-  border-radius: 10px;
-  width: 30vw;
-  bottom: 10vh;
-  padding-inline: 20px;
-
+.previewVideo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
-.chatContainer{
+
+.lobbyInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.joinButton {
+  padding: 12px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  background: #4285f4 !important;
+}
+
+/* Meeting Container */
+.meetingContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #1a1a1a;
+  color: white;
   position: relative;
-  height: 100%;
+  overflow: hidden;
 }
-.chattingArea{
+
+/* Video Grid Layout */
+.videoGrid {
+  flex: 1;
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  padding-bottom: 120px;
+  overflow: hidden;
+  place-items: center;
+}
+
+/* Responsive Grid Layouts - exactly like Google Meet */
+.participants1 {
+  grid-template-columns: 1fr;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.participants2 {
+  grid-template-columns: 1fr 1fr;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.participants3 {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.participants4 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.participants5,
+.participants6 {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.participants7,
+.participants8 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+/* Video Card - Google Meet Style */
+.videoCard {
+  position: relative;
+  background: #202124;
+  border-radius: 12px;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16/9;
+  min-height: 200px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.videoCard:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.videoElement {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #202124;
+}
+
+/* Video Off State - Avatar Circle */
+.videoOff {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarCircle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 600;
+  color: white;
+  backdrop-filter: blur(10px);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Video Info Overlay */
+.videoInfo {
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
-.chattingDisplay{
+
+.participantName {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.statusIcons {
+  display: flex;
+  gap: 8px;
+}
+
+.statusIcon {
+  background: rgba(234, 67, 53, 0.9);
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+.statusIcon svg {
+  font-size: 18px;
+  color: white;
+}
+
+/* Control Bar */
+.controlBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controlGroup {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex: 1;
+}
+
+.controlButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.controlIcon {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+  border-radius: 50% !important;
+  padding: 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.controlIcon:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1);
+}
+
+.controlIcon.disabled {
+  background: rgba(220, 53, 69, 0.8) !important;
+}
+
+.controlIcon.active {
+  background: rgba(40, 167, 69, 0.8) !important;
+}
+
+.controlIcon.endCall {
+  background: rgba(220, 53, 69, 0.9) !important;
+}
+
+.controlIcon.endCall:hover {
+  background: rgba(220, 53, 69, 1) !important;
+}
+
+.controlLabel {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+/* Meeting Info */
+.meetingInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 2px;
+}
+
+.participantCount,
+.meetingTime {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Chat Modal */
+.chatModal {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 350px;
+  height: calc(100vh - 140px);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatRoom {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chatHeader {
+  background: #f8f9fa;
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatHeader h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.closeChat {
+  color: #6c757d !important;
+  font-size: 24px !important;
+  font-weight: bold !important;
+}
+
+.chattingDisplay {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+
+.messageItem {
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  max-width: 80%;
+}
+
+.ownMessage {
+  background: #007bff;
+  color: white;
+  margin-left: auto;
+  text-align: right;
+}
+
+.otherMessage {
+  background: white;
+  color: #2c3e50;
+  border: 1px solid #e9ecef;
+}
+
+.messageSender {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.messageContent {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.messageTime {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.noMessages {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.noMessages p {
+  margin: 4px 0;
+}
+
+.chattingArea {
+  padding: 16px;
+  background: white;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sendButton {
+  background: #007bff !important;
+  color: white !important;
+  min-width: 40px !important;
+  height: 40px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .participants7,
+  .participants8 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .videoGrid {
+    padding: 10px;
+    gap: 8px;
+    padding-bottom: 100px;
+  }
   
+  .participants2,
+  .participants3,
+  .participants4,
+  .participants5,
+  .participants6,
+  .participants7,
+  .participants8 {
+    grid-template-columns: 1fr;
+  }
+  
+  .videoCard {
+    min-height: 180px;
+  }
+  
+  .avatarCircle {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+  }
+  
+  .controlGroup {
+    gap: 16px;
+  }
+  
+  .controlLabel {
+    display: none;
+  }
+  
+  .chatModal {
+    width: calc(100vw - 20px);
+    height: calc(100vh - 100px);
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+  
+  .meetingInfo {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .controlGroup {
+    gap: 12px;
+  }
+  
+  .controlIcon {
+    padding: 8px !important;
+  }
+  
+  .videoCard {
+    min-height: 150px;
+  }
+  
+  .avatarCircle {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+  
+  .participantName {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
 }

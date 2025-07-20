@@ -1,10 +1,10 @@
-  
+
 let IS_PROD = true;
 
-const server  = IS_PROD ? "https://tokingallvezbackend.onrender.com" :
+const server = IS_PROD ? "https://tokingallvezbackend.onrender.com" :
 
   "http://localhost:8000"
-   
+
 
 
 export default server;
