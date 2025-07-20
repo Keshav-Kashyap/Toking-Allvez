@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../../styles/LandingPage.css';
+import '../../styles/landingPage.css';
 import RoomShowcase from '../common/RoomShowcase'; // Import the new component
 
 const Hero = () => {
