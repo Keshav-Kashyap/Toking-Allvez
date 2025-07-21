@@ -231,6 +231,7 @@ export const useWebRTC = (serverUrl) => {
         });
         connections.current = {};
 
+
         // Disconnect socket
         if (socketRef.current) {
             socketRef.current.disconnect();

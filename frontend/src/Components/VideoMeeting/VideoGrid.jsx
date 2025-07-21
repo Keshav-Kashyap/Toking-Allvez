@@ -43,7 +43,7 @@ const VideoGrid = ({
                 </div>
 
                 {/* Small overlay video - Local user */}
-                <div className="absolute top-5 right-5 w-48 h-36 md:w-52 md:h-40 z-10 border-2 border-white rounded-lg overflow-hidden shadow-lg">
+                <div className="absolute bottom-5 left-5 w-40 h-28 md:w-52 md:h-40 z-10 border-2 border-white rounded-lg overflow-hidden shadow-lg">
                     <VideoCard
                         video={localVideoRef}
                         isLocal={true}
@@ -59,26 +59,27 @@ const VideoGrid = ({
 
     // Multiple participants - proper grid layout with span classes
     const getGridClasses = () => {
-        if (totalParticipants <= 4) {
-            return "grid-cols-2 grid-rows-2"; // 2x2 grid
-        } else if (totalParticipants <= 6) {
-            return "grid-cols-3 grid-rows-2"; // 3x2 grid
-        } else if (totalParticipants <= 9) {
-            return "grid-cols-3 grid-rows-3"; // 3x3 grid
-        } else {
-            return "grid-cols-4 grid-rows-3"; // 4x3 grid
-        }
+        if (totalParticipants === 1) return "grid-cols-1";
+        if (totalParticipants === 2) return "grid-cols-2";
+        if (totalParticipants <= 4) return "grid-cols-2";
+        if (totalParticipants <= 6) return "grid-cols-3";
+        if (totalParticipants <= 9) return "grid-cols-3";
+        return "grid-cols-4"; // for >9
     };
 
     const getMobileGridClasses = () => {
-        if (totalParticipants <= 4) {
-            return "md:grid-cols-2 md:grid-rows-2 grid-cols-1 grid-rows-4";
-        } else if (totalParticipants <= 6) {
-            return "md:grid-cols-3 md:grid-rows-2 grid-cols-2 grid-rows-3";
-        } else {
-            return "md:grid-cols-3 md:grid-rows-3 grid-cols-2 grid-rows-4";
-        }
+        return "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4";
     };
+
+    const getRowCount = () => {
+        if (totalParticipants <= 2) return 1;
+        if (totalParticipants <= 4) return 2;
+        if (totalParticipants <= 6) return 2;
+        if (totalParticipants <= 9) return 3;
+        return Math.ceil(totalParticipants / 4);
+    };
+    const rowCount = getRowCount();
+    const gridRowHeight = `auto-rows-[calc(100vh/${rowCount})]`;
 
     // Function to get span classes for better layout
     const getVideoSpanClass = (index, total) => {
@@ -134,16 +135,17 @@ const VideoGrid = ({
     ];
 
     return (
-        <div className="w-full h-screen bg-black p-2 md:p-4">
-            <div className={`
-                grid gap-2 md:gap-3 w-full h-full
-                ${getGridClasses()}
-                ${getMobileGridClasses()}
-            `}>
+        <div className="w-full min-h-screen bg-black p-2 md:p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
+
+            <div className={`grid w-full h-full pb-32 gap-2 sm:gap-3
+  ${getGridClasses()} 
+  ${getMobileGridClasses()} 
+  ${gridRowHeight}
+`}>
                 {allParticipants.map((participant, index) => (
                     <div
                         key={participant.key}
-                        className={`${getVideoSpanClass(index, totalParticipants)}`}
+                        className={`relative rounded-xl pb-32 w-full h-full ${getVideoSpanClass(index, totalParticipants)}`}
                     >
                         {participant.component}
                     </div>

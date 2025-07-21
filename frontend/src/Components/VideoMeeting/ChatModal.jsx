@@ -1,8 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import SendIcon from '@mui/icons-material/Send';
-import styles from "../../styles/videoComponent.module.css";
+import { Send, X, MessageCircle } from 'lucide-react';
 
 const ChatModal = ({
     showModal,
@@ -13,109 +10,119 @@ const ChatModal = ({
     onSendMessage,
     username
 }) => {
-    // Chat container के लिए ref
     const chatDisplayRef = useRef(null);
 
-    // Auto scroll function
     const scrollToBottom = () => {
         if (chatDisplayRef.current) {
             chatDisplayRef.current.scrollTop = chatDisplayRef.current.scrollHeight;
         }
     };
 
-    // Messages change होने पर auto scroll
     useEffect(() => {
-        scrollToBottom();
+        if (messages.length > 0) {
+            setTimeout(scrollToBottom, 100);
+        }
     }, [messages]);
 
-    // Modal open होने पर भी scroll करें
     useEffect(() => {
         if (showModal) {
-            setTimeout(scrollToBottom, 100); // Small delay for rendering
+            setTimeout(scrollToBottom, 200);
         }
     }, [showModal]);
 
     const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && message.trim()) {
-            onSendMessage();
+        if (e.key === 'Enter' && !e.shiftKey && message.trim()) {
+            e.preventDefault();
+            handleSendMessage();
         }
     };
 
     const handleSendMessage = () => {
-        onSendMessage();
-        // Message send करने के बाद तुरंत scroll करें
-        setTimeout(scrollToBottom, 50);
+        if (message.trim()) {
+            onSendMessage();
+            setTimeout(scrollToBottom, 100);
+        }
     };
 
     if (!showModal) return null;
 
     return (
-        <div className={styles.chatModal}>
-            <div className={styles.chatRoom}>
-                <div className={styles.chatHeader}>
-                    <h3>Meeting Chat</h3>
-                    <IconButton
-                        onClick={onClose}
-                        size="small"
-                        className={styles.closeChat}
-                    >
-                        ×
-                    </IconButton>
-                </div>
-
-                {/* Ref add किया गया है और scroll behavior */}
-                <div
-                    className={styles.chattingDisplay}
-                    ref={chatDisplayRef}
-                    style={{
-                        overflowY: 'auto',
-                        scrollBehavior: 'smooth' // Smooth scrolling
-                    }}
+        <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-50 flex flex-col border-l border-gray-200">
+            {/* Chat Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50">
+                <h3 className="text-lg font-semibold text-gray-800">Meeting Chat</h3>
+                <button
+                    onClick={onClose}
+                    className="p-1 hover:bg-gray-200 rounded-full transition-colors"
                 >
-                    {messages.length > 0 ? messages.map((item, index) => (
+                    <X className="w-5 h-5 text-gray-600" />
+                </button>
+            </div>
+
+            {/* Messages Display */}
+            <div
+                ref={chatDisplayRef}
+                className="flex-1 overflow-y-auto p-4 space-y-3 scroll-smooth"
+                style={{ scrollbarWidth: 'thin' }}
+            >
+                {messages.length > 0 ? messages.map((item, index) => (
+                    <div
+                        key={index}
+                        className={`flex flex-col ${item.sender === username ? 'items-end' : 'items-start'}`}
+                    >
                         <div
-                            key={index}
-                            className={`${styles.messageItem} ${item.sender === username ? styles.ownMessage : styles.otherMessage
+                            className={`max-w-[80%] rounded-lg px-3 py-2 ${item.sender === username
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-gray-100 text-gray-800'
                                 }`}
                         >
-                            <div className={styles.messageSender}>{item.sender}</div>
-                            <div className={styles.messageContent}>{item.data}</div>
-                            <div className={styles.messageTime}>
-                                {item.timestamp?.toLocaleTimeString([], {
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                }) || new Date().toLocaleTimeString([], {
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                })}
-                            </div>
+                            {item.sender !== username && (
+                                <div className="text-xs font-medium text-gray-600 mb-1">
+                                    {item.sender}
+                                </div>
+                            )}
+                            <div className="text-sm leading-relaxed">{item.data}</div>
                         </div>
-                    )) : (
-                        <div className={styles.noMessages}>
-                            <p>No messages yet</p>
-                            <p>Start the conversation!</p>
+                        <div className="text-xs text-gray-500 mt-1 px-1">
+                            {item.timestamp?.toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            }) || new Date().toLocaleTimeString([], {
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}
                         </div>
-                    )}
-                </div>
+                    </div>
+                )) : (
+                    <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                        <MessageCircle className="w-12 h-12 mb-3 text-gray-300" />
+                        <p className="text-sm font-medium">No messages yet</p>
+                        <p className="text-xs">Start the conversation!</p>
+                    </div>
+                )}
+            </div>
 
-                <div className={styles.chattingArea}>
-                    <TextField
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        variant="outlined"
-                        size="small"
-                        fullWidth
-                        onKeyPress={handleKeyPress}
-                    />
-                    <IconButton
-                        onClick={handleSendMessage} // Updated handler
-                        color="primary"
-                        className={styles.sendButton}
+            {/* Message Input */}
+            <div className="border-t border-gray-200 p-4 bg-white">
+                <div className="flex items-end gap-2">
+                    <div className="flex-1">
+                        <textarea
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Type a message..."
+                            className="w-full resize-none border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            rows="1"
+                            style={{ minHeight: '36px', maxHeight: '100px' }}
+                        />
+                    </div>
+                    <button
+                        onClick={handleSendMessage}
                         disabled={!message.trim()}
+                        className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                        <SendIcon />
-                    </IconButton>
+                        <Send className="w-4 h-4" />
+                    </button>
                 </div>
             </div>
         </div>

@@ -23,7 +23,9 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.status === StatusCodes.CREATED) {
+
         return response.data.message;
+
       }
     } catch (err) {
       console.log("Registration error:", err); // Debug log
@@ -50,8 +52,8 @@ export const AuthProvider = ({ children }) => {
 
       if (response.status === StatusCodes.OK) {
         localStorage.setItem("token", response.data.token);
-        setUserData(response.data.user);
         router('/home');
+        setUserData(response.data.user);
         return response.data.message;
       }
     } catch (err) {
@@ -67,6 +69,24 @@ export const AuthProvider = ({ children }) => {
       throw errorObj;
     }
   };
+
+  const getUserInfo = async () => {
+    try {
+      const response = await client.get("/me", {
+        params: {
+          token: localStorage.getItem("token")
+
+        },
+      });
+      return response.data;
+    } catch (err) {
+      throw {
+        message: err?.response?.data?.message || "Failed to fetch user info",
+        status: err?.response?.status,
+      };
+    }
+  };
+
 
 
   const getHistoryOfUser = async () => {
@@ -106,7 +126,8 @@ export const AuthProvider = ({ children }) => {
     handleRegister,
     handleLogin,
     getHistoryOfUser,
-    addToUserHistory
+    addToUserHistory,
+    getUserInfo
   };
 
   return (

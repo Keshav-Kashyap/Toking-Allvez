@@ -36,7 +36,7 @@ const VideoMeetingMain = () => {
     // UI states
     const [askForUsername, setAskForUsername] = useState(true);
     const [username, setUsername] = useState("");
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     // Media control states with initial values to prevent undefined checks
     const [mediaControls, setMediaControls] = useState({

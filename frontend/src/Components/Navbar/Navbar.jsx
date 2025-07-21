@@ -1,15 +1,15 @@
 import React from 'react'
-import {  Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-import { HomeNavbarItems,LandingNavbarItems } from './NavbarItems';
-
+import { LandingNavbarItems } from './NavbarItems';
+import { HomeNavbarItems } from './HomeItems';
 const Navbar = (props) => {
-     const routeTo = useNavigate();
-    
-      
-  return (
-    <>
-      <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    const routeTo = useNavigate();
+
+
+    return (
+        <>
+            <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="flex items-center">
@@ -20,18 +20,18 @@ const Navbar = (props) => {
                                 <span className="text-xl font-semibold text-gray-900">Toking Allvez</span>
                             </div>
                         </div>
-{props.home ? <HomeNavbarItems/> :<LandingNavbarItems/> }
-                        
-                       
-            
+                        {props.home ? <HomeNavbarItems /> : <LandingNavbarItems />}
+
+
+
 
 
                     </div>
 
                 </div>
             </nav>
-            </>
-  )
+        </>
+    )
 }
 
 export default Navbar

@@ -17,7 +17,7 @@ const ModernAuthPage = () => {
   const [success, setSuccess] = useState('');
 
   // AuthContext se functions import karte hain
-  const { handleLogin, handleRegister } = useContext(AuthContext);
+  const { handleLogin, handleRegister, getUserInfo } = useContext(AuthContext);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,6 +57,13 @@ const ModernAuthPage = () => {
       if (activeTab === 'login') {
         // Login function call
         const message = await handleLogin(formData.username, formData.password);
+        const userInfo = await getUserInfo();
+        if (userInfo) {
+          console.log("userInfo this :", userInfo);
+          localStorage.setItem("user", JSON.stringify(userInfo)); // ✅
+        } else {
+          console.log("not found user info");
+        }
         setSuccess(message || 'Welcome back! Login successful!');
       } else {
         // Register function call
