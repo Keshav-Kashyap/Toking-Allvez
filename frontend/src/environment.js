@@ -1,5 +1,5 @@
 
-let IS_PROD = ture;
+let IS_PROD = true;
 
 const server = IS_PROD ? "https://tokingallvezbackend.onrender.com" :
 
