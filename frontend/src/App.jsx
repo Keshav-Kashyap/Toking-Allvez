@@ -13,8 +13,6 @@ import VideoMeetingMain from './Components/VideoMeeting/VideoMeetingMain';
 // import Signup from './pages/auth/Signup';
 import HomeComponent from './pages/home'
 import LoginPage from './pages/auth';
-
-import LandingNewPage from './pages/landingNew';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -32,7 +30,7 @@ function App() {
 
 
             <Route path='/' element={<LandingPage />} />
-            <Route path='/landing' element={<LandingNewPage />} />
+           
             <Route path='/auth' element={<LoginPage />} />
             <Route path='/history' element={<History />} />
             <Route path='/home' element={<HomeComponent />} />
