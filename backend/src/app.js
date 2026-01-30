@@ -9,7 +9,7 @@ import { connectToSocket } from "./controllers/socketManger.js";
 const app = express();
 const server = createServer(app);
 
-// socket.io
+// socket
 connectToSocket(server);
 
 // middlewares
@@ -24,32 +24,21 @@ app.get("/home", (req, res) => {
   return res.json({ hello: "world" });
 });
 
-// port
+// 🔥 SERVER FIRST
 const PORT = process.env.PORT || 8000;
 
-/**
- * 🔥 IMPORTANT FIX
- * Server will start FIRST
- * DB will connect AFTER
- */
-
-// start server (THIS WAS THE BUG)
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
 
-// connect database
-const start = async () => {
+// 🔥 DB OPTIONAL (NON-BLOCKING)
+(async () => {
   try {
-    const connectionDb = await mongoose.connect(
-      "mongodb+srv://talkwithgamers:xj7EmWoKazvwDW6n@cluster0.v8a07ew.mongodb.net/"
+    await mongoose.connect(
+      "mongodb+srv://talkwithgamers:PASSWORD@cluster0.v8a07ew.mongodb.net/tokingdb"
     );
-    console.log(
-      `✅ MongoDB connected: ${connectionDb.connection.host}`
-    );
-  } catch (error) {
-    console.error("❌ MongoDB connection failed:", error.message);
+    console.log("✅ MongoDB connected");
+  } catch (err) {
+    console.error("⚠️ MongoDB NOT connected (server still running)");
   }
-};
-
-start();
+})();
