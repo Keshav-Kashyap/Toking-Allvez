@@ -110,7 +110,7 @@ export default function History() {
                             </IconButton>
                             <div>
                                 <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                               this is your     Meeting History
+                               this is your     Meeting History cicd done
                                 </h1>
                                 <p className="text-gray-600 mt-1">View all your past meetings and sessions</p>
                             </div>
