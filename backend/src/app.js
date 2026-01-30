@@ -35,7 +35,7 @@ server.listen(PORT, () => {
 (async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://talkwithgamers:PASSWORD@cluster0.v8a07ew.mongodb.net/tokingdb"
+      "mongodb+srv://keshav:%40Keshav981101@cluster0.havrjwt.mongodb.net/tokingdb"
     );
     console.log("✅ MongoDB connected");
   } catch (err) {
